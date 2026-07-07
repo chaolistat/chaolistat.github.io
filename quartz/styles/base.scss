@@ -129,6 +129,28 @@ a {
   }
 }
 
+.tags {
+  list-style: none;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  padding-left: 0;
+}
+
+.tags > li {
+  display: inline-flex;
+  margin: 0;
+  overflow-wrap: normal;
+  text-wrap: nowrap;
+}
+
+a.internal.tag-link {
+  display: inline-block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 .flex-component {
   display: flex;
 }
