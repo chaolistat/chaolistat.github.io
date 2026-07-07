@@ -6,29 +6,29 @@
       <description>最近的10条笔记 on Chaoli 的个人博客</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>首页</title>
+    <link>https://chaolistat.github.io/</link>
+    <guid>https://chaolistat.github.io/</guid>
+    <description><![CDATA[ Chaoli 的个人博客 这里整理可公开的个人思考和论文阅读笔记。日常写作仍在本地 Obsidian 中完成，只有明确标记 publish: true 的内容会同步到这里。 入口 个人思考 论文笔记 关于 最近更新 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 推荐系统重排最新进展 · 2026-06-10 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM-Diversity-Re-ranking · 2026-06-10 LLM4Rerank ... ]]></description>
+    <pubDate>Tue, 07 Jul 2026 07:42:51 GMT</pubDate>
+  </item><item>
     <title>论文笔记</title>
     <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</link>
     <guid>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</guid>
-    <description><![CDATA[ 论文笔记 这里收录公开的论文阅读笔记、研究整理和方法总结。 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM4Rerank · 2026-06-10 LLM-Diversity-Re-ranking · 2026-06-10 InvariRank · 2026-06-10 CONGRATS · 2026-06-10 CMR · 2026-06-10 AgenticRecTune · 2026-06-1... ]]></description>
-    <pubDate>Tue, 07 Jul 2026 07:39:43 GMT</pubDate>
+    <description><![CDATA[ 论文笔记 这里收录公开的论文阅读笔记、研究整理和方法总结。 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 推荐系统重排最新进展 · 2026-06-10 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM-Diversity-Re-ranking · 2026-06-10 LLM4Rerank · 2026-06-10 InvariRank · 2026-06-10 CONGRATS · 2026-06-10 CMR · 2026-06-10 Ag... ]]></description>
+    <pubDate>Tue, 07 Jul 2026 07:42:51 GMT</pubDate>
   </item><item>
     <title>个人思考</title>
     <link>https://chaolistat.github.io/%E4%B8%AA%E4%BA%BA%E6%80%9D%E8%80%83/</link>
     <guid>https://chaolistat.github.io/%E4%B8%AA%E4%BA%BA%E6%80%9D%E8%80%83/</guid>
     <description><![CDATA[ 个人思考 这里收录公开的长期想法、反思和主题化写作。 暂无公开笔记。. ]]></description>
-    <pubDate>Tue, 07 Jul 2026 07:39:43 GMT</pubDate>
-  </item><item>
-    <title>首页</title>
-    <link>https://chaolistat.github.io/</link>
-    <guid>https://chaolistat.github.io/</guid>
-    <description><![CDATA[ Chaoli 的个人博客 这里整理可公开的个人思考和论文阅读笔记。日常写作仍在本地 Obsidian 中完成，只有明确标记 publish: true 的内容会同步到这里。 入口 个人思考 论文笔记 关于 最近更新 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM4Rerank · 2026-06-10 LLM-Diversity-Re-ranking · 2026-06-10 InvariRank ... ]]></description>
-    <pubDate>Tue, 07 Jul 2026 05:20:47 GMT</pubDate>
+    <pubDate>Tue, 07 Jul 2026 07:41:04 GMT</pubDate>
   </item><item>
     <title>关于</title>
     <link>https://chaolistat.github.io/%E5%85%B3%E4%BA%8E</link>
     <guid>https://chaolistat.github.io/%E5%85%B3%E4%BA%8E</guid>
     <description><![CDATA[ 关于 我是阿星，当前在快手从事推荐算法相关工作。我的兴趣主要集中在推荐系统、大模型推荐、生成式推荐以及 LLM 在用户理解、兴趣推理和推荐链路中的应用。 研究兴趣 推荐大模型与生成式推荐 LLM 驱动的用户理解、兴趣总结与推荐推理 序列推荐、召回与排序模型 推荐系统中的多目标优化与在线实验 经历 快手，推荐算法 淘天集团，算法实习生，参与淘宝直播上下滑场景中的认知推荐与生成式推荐探索 滴滴出行，算法实习生，参与花小猪打车车型推荐与呼叫返券相关模型迭代 论文 ACformer: A Unified Transformer for Arbitrary-Frame Image Exposure Co... ]]></description>
-    <pubDate>Tue, 07 Jul 2026 05:06:07 GMT</pubDate>
+    <pubDate>Tue, 07 Jul 2026 07:41:04 GMT</pubDate>
   </item><item>
     <title>LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation</title>
     <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/LLM%E9%87%8D%E6%8E%92/LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation</link>
