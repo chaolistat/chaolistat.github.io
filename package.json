@@ -1,10 +1,10 @@
 {
   "name": "chaolistat.github.io",
-  "description": "Chaoli's personal blog powered by Quartz",
+  "description": "阿星的个人博客 powered by Quartz",
   "private": true,
   "version": "4.5.2",
   "type": "module",
-  "author": "Chaoli",
+  "author": "阿星",
   "license": "MIT",
   "homepage": "https://quartz.jzhao.xyz",
   "repository": {
