@@ -1,3 +1,11 @@
 public
 node_modules
 .quartz-cache
+*.html
+index.css
+index.xml
+sitemap.xml
+postscript.js
+prescript.js
+static/
+tags/
