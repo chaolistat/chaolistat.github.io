@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr"><head><title>RankMixer</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans SC:wght@400;700&amp;family=Noto Sans SC:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Chaoli 的个人博客"/><meta property="og:title" content="RankMixer"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="RankMixer"/><meta name="twitter:description" content="RankMixer 1."/><meta property="og:description" content="RankMixer 1."/><meta property="og:image:alt" content="RankMixer 1."/><meta property="og:image" content="https://chaolistat.github.io/static/og-image.png"/><meta property="og:image:url" content="https://chaolistat.github.io/static/og-image.png"/><meta name="twitter:image" content="https://chaolistat.github.io/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="chaolistat.github.io"/><meta property="og:url" content="https://chaolistat.github.io/notes/论文笔记/精排/模型扩展/RankMixer"/><meta property="twitter:url" content="https://chaolistat.github.io/notes/论文笔记/精排/模型扩展/RankMixer"/><link rel="icon" href="../../../../static/icon.png"/><meta name="description" content="RankMixer 1."/><meta name="generator" content="Quartz"/><link href="../../../../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFVzZXJzXFxjaGFvbFxcRGVza3RvcFxc5o6o6I2Q6K665paH6ZiF6K+7XFxjaGFvbGlzdGF0LmdpdGh1Yi5pb1xccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../../../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://chaolistat.github.io/index.xml"/></head><body data-slug="notes/论文笔记/精排/模型扩展/RankMixer"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../../../..">Chaoli 的个人博客</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>搜索</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="搜索些什么" placeholder="搜索些什么"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="暗色模式"><title>暗色模式</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="亮色模式"><title>亮色模式</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="阅读模式"><title>阅读模式</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-33"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>探索</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-33" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../../notes/">notes</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../../notes/论文笔记/">论文笔记</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../../notes/论文笔记/精排/">精排</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../../notes/论文笔记/精排/模型扩展/">模型扩展</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>RankMixer</a></div></nav><h1 class="article-title">RankMixer</h1><p show-comma="true" class="content-meta"><time datetime="2026-06-05T16:00:00.000Z">2026年6月06日</time><span>22分钟阅读</span></p><ul class="tags"><li><a href="../../../../tags/paper-note" class="internal tag-link">paper-note</a></li><li><a href="../../../../tags/scaling" class="internal tag-link">scaling</a></li><li><a href="../../../../tags/recommender" class="internal tag-link">recommender</a></li><li><a href="../../../../tags/ranking" class="internal tag-link">ranking</a></li><li><a href="../../../../tags/fine-ranking" class="internal tag-link">fine-ranking</a></li><li><a href="../../../../tags/model-scaling" class="internal tag-link">model-scaling</a></li></ul></div></div><article class="popover-hint"><h1 id="rankmixer">RankMixer<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#rankmixer" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="1-基本信息">1. 基本信息<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-基本信息" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>标题：RankMixer: Scaling Up Ranking Models in Industrial Recommenders</li>
+<li>作者：Jie Zhu, Zhifang Fan, Xiaoxie Zhu, Yuchen Jiang, Hangyu Wang 等，ByteDance</li>
+<li>时间：2025</li>
+<li>链接：<a href="https://arxiv.org/abs/2507.15551" class="external">https://arxiv.org/abs/2507.15551<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>关键词：Scaling Laws、Ranking Model、Recommender System</li>
+<li>pdf位置：<code>C:\Users\chaol\Desktop\推荐论文阅读\scaling\rankmixer.pdf</code></li>
+<li>笔记位置：<code>论文笔记/精排/模型扩展/RankMixer.md</code></li>
+<li>分类：精排 / 模型扩展</li>
+</ul>
+<h2 id="11-相关论文">1.1 相关论文<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-相关论文" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../../../../notes/论文笔记/精排/模型扩展/OneTrans" class="internal" data-slug="notes/论文笔记/精排/模型扩展/OneTrans">OneTrans</a>：把 <a href="../../../../notes/论文笔记/精排/模型扩展/RankMixer" class="internal" data-slug="notes/论文笔记/精排/模型扩展/RankMixer">RankMixer</a> 擅长的 non-seq tokenization / token-specific parameter 思路进一步并入统一的 sequence + feature interaction backbone。</li>
+<li><a href="../../../../notes/论文笔记/精排/模型扩展/UniMixer" class="internal" data-slug="notes/论文笔记/精排/模型扩展/UniMixer">UniMixer</a>：直接后续/对照工作，把 RankMixer/TokenMixer 的规则 token mixing 解释为可参数化 permutation-like mixing，并在主结果与 scaling curve 中把 RankMixer 作为最强基线。</li>
+<li><a href="../../../../notes/论文笔记/精排/模型扩展/HyFormer" class="internal" data-slug="notes/论文笔记/精排/模型扩展/HyFormer">HyFormer</a>：同样想把长序列建模与异构特征交互统一起来，但走的是 query-centric 的交替结构，而不是 <a href="../../../../notes/论文笔记/精排/模型扩展/RankMixer" class="internal" data-slug="notes/论文笔记/精排/模型扩展/RankMixer">RankMixer</a> 这种 token mixing 主导路线。</li>
+</ul>
+<h2 id="2-一句话总结">2. 一句话总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-一句话总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>这篇论文想解决的不是“推荐模型还能不能更大”，而是“在工业推荐严格的延迟和 QPS 约束下，排序模型怎样才能真正 scale up”。作者给出的答案是：不要继续堆 CPU 时代遗留下来的低 MFU 异构特征交叉模块，而是重新设计一个更适合 GPU 并行、又保留特征交互能力的统一骨干网络 <code>RankMixer</code>，再结合 Sparse-MoE、动态路由和工程优化，把线上排序模型从千万级参数扩到 10 亿级，同时基本不增加推理延迟。</p>
+<h2 id="3-论文在解决什么问题">3. 论文在解决什么问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-论文在解决什么问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="31-背景">3.1 背景<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#31-背景" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>工业推荐里的 ranking 模型已经有很多特征交叉结构，例如 MLP、DCN、Attention、DHEN 等，但这些方法有一个共同问题：它们大多是围绕“怎么做更复杂的 feature crossing”设计出来的，而不是围绕“怎么在现代 GPU 上高效扩展”设计出来的。</p>
+<p>作者认为，推荐排序和 NLP/CV 不一样，工业场景有两个硬约束：</p>
+<ol>
+<li><strong>线上成本约束强</strong>：必须满足很低延迟和极高 QPS，不能像大模型那样只追求效果。</li>
+<li><strong>旧式交叉模块不适合 GPU</strong>：很多结构是 memory-bound，而不是 compute-bound，导致 GPU 并没有被真正吃满，MFU 很低，扩模型的 ROI 很差。</li>
+</ol>
+<p>所以问题不只是“模型结构是否有效”，而是：</p>
+<ul>
+<li>能不能设计一个统一的 ranking backbone；</li>
+<li>既能表达 heterogeneous feature interaction；</li>
+<li>又能把参数规模做大；</li>
+<li>还不会把线上 serving 成本一起拉爆。</li>
+</ul>
+<h3 id="32-作者的核心判断">3.2 作者的核心判断<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#32-作者的核心判断" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>这篇论文背后的思考非常清晰：</p>
+<ul>
+<li>推荐系统确实也应该 obey scaling law，但前提是模型结构要先适合扩展。</li>
+<li>真正限制工业 ranking scale up 的，未必是参数本身，而是 <code>参数 -> FLOPs -> 实际延迟</code> 这条链路没被打通。</li>
+<li>如果一个模型能同时做到：
+<ul>
+<li>参数增长比 FLOPs 增长更快；</li>
+<li>FLOPs 增长比真实 latency 增长更慢；</li>
+<li>GPU 的 MFU 足够高；</li>
+</ul>
+那它就有机会在工业场景里实现“大模型收益 + 小模型成本”。</li>
+</ul>
+<h2 id="4-方法总览">4. 方法总览<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-方法总览" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="41-整体结构">4.1 整体结构<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#41-整体结构" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>RankMixer <strong>的整体结构很像一个为推荐系统重新设计过的</strong> Transformer backbone。输入端先把大量 heterogeneous features 做 embedding，然后通过 <strong>tokenization</strong> 变成若干语义 token；中间堆叠 <code>L</code> 层 RankMixer block；最后做 mean pooling，输出给多个任务头。</p>
+<p><img src="../../../../notes/论文笔记/精排/模型扩展/rankmixer_fig1_arch.png" width="900" height="auto" alt/></p>
+<p>每个 RankMixer block 只有两个核心部件：</p>
+<ol>
+<li><strong>Multi-head Token Mixing</strong></li>
+<li><strong>Per-token FFN</strong></li>
+</ol>
+<p>作者还进一步把 Per-token FFN 扩展成 Sparse-MoE 版本，用来继续提升参数规模与收益比。</p>
+<h3 id="42-为什么先做-tokenization">4.2 为什么先做 tokenization<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#42-为什么先做-tokenization" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>推荐系统的输入不是统一语义空间里的词 token，而是用户、物品、交叉特征、序列特征等异构信息，embedding 维度也可能不同。如果直接“一特征一 token”，token 数会太多，每个 token 分到的参数和计算都太碎，既不利于建模，也不利于 GPU 并行；但如果 token 太少，又会退化成普通 DNN，不再保留不同语义子空间。</p>
+<p>因此作者采用了一个折中设计：<strong>按语义把特征分组，然后拼接，再切成固定维度的 token</strong>。这样每个 token 不再对应单个 feature，而是对应一个“语义相近的 feature cluster”。在我的理解里，这一步相当于先把推荐系统里很散的 feature world 压缩成少量、较粗粒度、可并行处理的 token world，为后续统一 backbone 做准备。****</p>
+<h2 id="5-rankmixer-为什么这样设计">5. RankMixer 为什么这样设计<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-rankmixer-为什么这样设计" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="51-multi-head-token-mixing不用-attention而是做-token-重组">5.1 Multi-head Token Mixing：不用 Attention，而是做 token 重组<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#51-multi-head-token-mixing不用-attention而是做-token-重组" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>作者认为，自注意力在 NLP 中有效，是因为 token 之间共享统一 embedding space，点积相似度是有意义的；但推荐场景里的 token 来自不同 feature subspace，用户侧 ID、物品侧 ID、上下文统计量、行为序列的语义空间并不统一，直接做内积相似度未必合理，而且 attention 还会带来额外的计算、显存和 memory IO 开销。</p>
+<p>所以 RankMixer 没有沿用 self-attention，而是提出了 <strong>Multi-head Token Mixing</strong>：</p>
+<ol>
+<li>先把每个 token 切成 <code>H</code> 个 head；</li>
+<li>对同一个 head 位上的所有 token 做重新拼接；</li>
+<li>得到新的 mixed tokens；</li>
+<li>再加残差和 LayerNorm。</li>
+</ol>
+<p>这个操作本质上是在做一种 <strong>参数无关的跨 token 信息交换</strong>。它不像 attention 那样去学 token-token 相似度，而是直接让不同 token 的子空间信息发生重组。作者的立场很明确：在 heterogeneous recommendation features 上，这种简单直接的 mixing 比 self-attention 更适合，也更省。</p>
+<p>这里有一个很容易卡住的维度问题，论文里虽然提到了，但笔记里也应该明确写出来：为什么 Token Mixing 后还能和输入做残差相加？输入形状是 <code>T × D</code>，而 mixing 后表面上看是 <code>H × (T·D/H)</code>，好像维度变了。关键在于作者专门设置了 <code>H = T</code>，于是输出就变成：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span>
+<p>也就是说，Token Mixing 本质上是在做一种重排和重组，而不是改变 block 的最终张量尺寸。正因为输出重新回到了 <code>T × D</code>，所以才能直接做：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">LN</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">TokenMixing</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span></span></span></span></span>
+<p>如果 <code>H \neq T</code>，那就不能直接残差相加，除非再额外接一层投影把维度对齐。作者把 <code>H = T</code> 固定下来，既是为了残差连接成立，也是为了让整个 block 结构保持干净，不需要额外的对齐层。</p>
+<h3 id="52-per-token-ffn每个-token-一套独立参数">5.2 Per-token FFN：每个 token 一套独立参数<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#52-per-token-ffn每个-token-一套独立参数" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>这是我觉得论文里最关键的设计之一。</p>
+<p>传统 Transformer 的 FFN 是所有 token 共享一套参数；但作者认为，推荐系统里的 token 本来就代表不同语义子空间，如果还共用 FFN，那么高频、强势特征很容易压制长尾或低频特征，造成“跨空间支配”问题。</p>
+<p>于是 RankMixer 改成了 <strong>Per-token FFN</strong>：每个 token 都有自己的 FFN 参数。这样做有两个直接效果：</p>
+<ol>
+<li><strong>表达能力变强</strong>：参数显著增多；</li>
+<li><strong>计算复杂度不变</strong>：因为每个 token 仍然只过自己的两层 MLP，总 FLOPs 级别没有本质变化。</li>
+</ol>
+<p>论文中特别强调，它和 MMoE 也不一样。MMoE 是多个 expert 看同一个输入，而 RankMixer 是“不同 token + 不同参数”同时拆开，这更像是在显式保护不同 feature subspace 的建模独立性。</p>
+<h3 id="53-sparse-moe继续放大参数但不按传统-top-k-路由来做">5.3 Sparse-MoE：继续放大参数，但不按传统 Top-k 路由来做<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#53-sparse-moe继续放大参数但不按传统-top-k-路由来做" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>作者在更大规模上又发现，单纯把 Per-token FFN 换成普通 Sparse-MoE 也不行，原因有两个：</p>
+<ol>
+<li><strong>uniform top-k routing 不合理</strong>：所有 token 都激活相同数量的 expert，浪费预算，也无法体现 token 重要性差异。</li>
+<li><strong>expert under-training</strong>：Per-token FFN 本来就把参数按 token 拆散了，再叠加不共享 expert，专家总量会爆炸，导致路由极不均衡，一些 expert 基本学不到东西。</li>
+</ol>
+<p>为了解决这个问题，论文提出两个配套设计：</p>
+<ul>
+<li><strong>ReLU Routing</strong>：不用 <code>Top-k + softmax</code>，而是让每个 token 经过 ReLU gate，自适应决定激活多少专家，再用 <code>L1</code> 正则控制平均激活比例。信息量大的 token 可以激活更多 expert，信息量小的 token 少激活一些。</li>
+<li><strong>Dense-training / Sparse-inference (DTSI)</strong>：训练时用更 dense 的路由，让 expert 得到充分训练；推理时只用 sparse 路由，保证线上成本。</li>
+</ul>
+<p>这两个设计合在一起，本质是在解决一个工业 Sparse-MoE 常见难点：<strong>既要专家足够多来撑参数规模，又不能让专家训练失衡，更不能把线上推理成本拉爆。</strong></p>
+<h3 id="54-扩展方向">5.4 扩展方向<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#54-扩展方向" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>论文把 RankMixer 的扩展轴概括为四个：<code>Token 数 T</code>、<code>宽度 D</code>、<code>层数 L</code>、<code>专家数 E</code>。对 dense 版本，参数和 FLOPs 近似满足：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">#</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0585em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">OP</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>
+<p>作者实验里观察到一个和 LLM 很像的现象：<strong>性能主要和总参数量相关，而不是强依赖某一种扩展方式</strong>。也就是说，增宽、增深、增 token 数都能带来接近的收益；但从计算效率看，增宽会形成更大的 GEMM shape，更容易把 GPU 跑满，因此最终选择了偏“宽而浅”的配置：</p>
+<ul>
+<li><code>RankMixer-100M</code>: <code>D=768, T=16, L=2</code></li>
+<li><code>RankMixer-1B</code>: <code>D=1536, T=32, L=2</code></li>
+</ul>
+<p>这也再次说明作者不是单纯追求模型表达力，而是在表达力和硬件效率之间找平衡。</p>
+<h2 id="6-实验是怎么证明这套思路有效的">6. 实验是怎么证明这套思路有效的<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-实验是怎么证明这套思路有效的" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="61-实验设置">6.1 实验设置<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#61-实验设置" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>离线实验来自抖音推荐系统的生产数据，包含 300 多个特征，覆盖数十亿 user ID、上亿 video ID，每天数据量达到 trillion 级，实验使用两周数据。评估指标既看效果，也看效率：</p>
+<ul>
+<li>效果：Finish/Skip 的 AUC、UAUC</li>
+<li>效率：Dense 参数量、FLOPs、MFU</li>
+</ul>
+<p>这个设置很重要，因为论文的主张不是“离线指标稍微更高”，而是“在真实工业算力约束下能不能更值得 scale”。</p>
+<h3 id="62-和-sota-的对比">6.2 和 SOTA 的对比<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#62-和-sota-的对比" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>在相近参数规模下，RankMixer 的表现明显更强。</p>
+<p><img src="../../../../notes/论文笔记/精排/模型扩展/rankmixer_table1_fig2.png" width="560" height="auto" alt/></p>
+<p>对比表里最关键的信息有两层：</p>
+<ol>
+<li>
+<p><strong>100M 量级时，RankMixer-100M 效果已经超过其他强 baseline</strong></p>
+<ul>
+<li>Finish AUC <code>+0.64%</code></li>
+<li>Finish UAUC <code>+0.72%</code></li>
+<li>Skip AUC <code>+0.86%</code></li>
+<li>Skip UAUC <code>+1.33%</code></li>
+</ul>
+</li>
+<li>
+<p><strong>继续放大到 1B 后，收益还在持续变大</strong></p>
+<ul>
+<li>Finish AUC <code>+0.95%</code></li>
+<li>Finish UAUC <code>+1.22%</code></li>
+<li>Skip AUC <code>+1.25%</code></li>
+<li>Skip UAUC <code>+1.82%</code></li>
+</ul>
+</li>
+</ol>
+<p>作者借这组实验说明了两件事：</p>
+<ul>
+<li>单纯把 DLRM 直接堆到 100M，收益很有限，说明推荐模型不是“参数大就自然有效”。</li>
+<li>RankMixer 在参数和 FLOPs 之间的平衡更好，所以它的 scaling 曲线更陡、更稳定。</li>
+</ul>
+<h3 id="63-scaling-law为什么作者说它更适合-scale">6.3 Scaling law：为什么作者说它更适合 scale<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#63-scaling-law为什么作者说它更适合-scale" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Figure 2 展示了不同模型的 AUC gain 随参数规模、FLOPs 增长的曲线，RankMixer 的曲线最陡。这意味着相同的参数增加或相同的计算增加，RankMixer 都更容易把它们转化成效果收益。</p>
+<p>论文里对其他方法的判断也很值得记一下：</p>
+<ul>
+<li><code>DLRM-MLP</code>：直接堆大，收益有限。</li>
+<li><code>DCN / RDCN / AutoInt / DHEN</code>：参数和计算不平衡，FLOPs 上去很快。</li>
+<li><code>HiFormer</code>：效果不错，但 attention 和更细粒度 token 划分影响效率。</li>
+<li><code>Wukong</code>：参数扩展也能涨效果，但 FLOPs 涨得更快，ROI 不如 RankMixer。</li>
+<li><code>普通 MoE</code>：专家不平衡，scale 效果不理想。</li>
+</ul>
+<p>所以作者的论点不是“我们比所有模型都更聪明”，而是“我们这个结构最适合把工业推荐的 scale potential 真正兑现出来”。</p>
+<h3 id="64-消融实验哪些模块是关键">6.4 消融实验：哪些模块是关键<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#64-消融实验哪些模块是关键" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>论文的消融结果比较直观：</p>
+<ul>
+<li>去掉 residual connection：<code>-0.07%</code></li>
+<li>去掉 layer normalization：<code>-0.05%</code></li>
+<li>去掉 multi-head token mixing：<code>-0.50%</code></li>
+<li>把 per-token FFN 改成 shared FFN：<code>-0.31%</code></li>
+</ul>
+<p>这里最有信息量的是后两项，说明：</p>
+<ol>
+<li><strong>Token mixing 确实承担了跨 token 的全局交互功能</strong>，不是一个可有可无的小技巧。</li>
+<li><strong>Per-token FFN 确实在保护不同 feature subspace 的独立建模能力</strong>。</li>
+</ol>
+<p>论文还专门对比了几种 routing 方式，结果表明 self-attention 虽然只略差一点，但参数多 <code>16%</code>、FLOPs 多 <code>71.8%</code>，性价比明显不如 token mixing。这其实再次呼应了整篇论文的核心取向：<strong>工业 ranking 里，高性价比的交互方式比“更通用的大一统算子”更重要。</strong></p>
+<h3 id="65-sparse-moe为什么它能继续往上扩">6.5 Sparse-MoE：为什么它能继续往上扩<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#65-sparse-moe为什么它能继续往上扩" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../../notes/论文笔记/精排/模型扩展/rankmixer_fig3_fig4.png" width="520" height="auto" alt/></p>
+<p>Figure 3 和 Figure 4 对应 Sparse-MoE 的核心结论：</p>
+<ul>
+<li>结合 <code>DTSI + ReLU Routing</code> 后，即使 expert 激活比例越来越低，AUC 也几乎不掉。</li>
+<li>相比之下，vanilla Sparse-MoE 一旦稀疏起来，性能下降明显。</li>
+<li>Figure 4 还说明不同 token 的 expert 激活比例是动态变化的，这正符合推荐数据分布高度异质、不同 token 信息量差异很大的特点。</li>
+</ul>
+<p>作者给出的结论是，这套设计让 RankMixer 能在 <strong>几乎不损失效果</strong> 的情况下把参数容量再放大 <code>8x+</code>，同时带来 <code>50%+</code> 的吞吐改善，为继续向 10B 级别扩展留下空间。</p>
+<h2 id="7-线上结果与工程解释">7. 线上结果与工程解释<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-线上结果与工程解释" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="71-在线效果">7.1 在线效果<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#71-在线效果" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../../notes/论文笔记/精排/模型扩展/rankmixer_table456_online.png" width="860" height="auto" alt/></p>
+<p>线上 A/B 测试覆盖了两类核心场景：Feed Recommendation 和 Advertising。</p>
+<p>Feed 推荐里，<code>RankMixer-1B</code> 在 Douyin 主 App 的整体收益为：</p>
+<ul>
+<li>Active Day <code>+0.2908%</code></li>
+<li>Duration <code>+1.0836%</code></li>
+<li>Like <code>+2.3852%</code></li>
+<li>Finish <code>+1.9874%</code></li>
+<li>Comment <code>+0.7886%</code></li>
+</ul>
+<p>而且低活用户收益更大，例如主 App 的低活用户：</p>
+<ul>
+<li>Active Day <code>+1.7412%</code></li>
+<li>Duration <code>+3.6434%</code></li>
+<li>Like <code>+8.1641%</code></li>
+<li>Finish <code>+4.5393%</code></li>
+</ul>
+<p>广告场景里也有：</p>
+<ul>
+<li><code>ΔAUC +0.73%</code></li>
+<li><code>ADVV +3.90%</code></li>
+</ul>
+<p>这说明 RankMixer 并不是只对某个特定 ranking 任务有效，而是作为统一 backbone 在不同 personalised ranking 场景下都能 work。</p>
+<h3 id="72-为什么-1b-参数没有把线上延迟打爆">7.2 为什么 1B 参数没有把线上延迟打爆<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#72-为什么-1b-参数没有把线上延迟打爆" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>这是整篇论文最“工程价值”也最高的部分。</p>
+<p>作者把延迟拆成下面这个式子：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">L</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">cy</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1963em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">MF</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">h</span><span class="mord mathnormal">eore</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">a</span><span class="mord mathnormal">re</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">OP</span><span class="mord mathnormal">s</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">#</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">OP</span><span class="mord mathnormal">s</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span>
+<p>也就是说，参数规模变大不一定直接等于延迟变大，中间至少还有三个调节杆：</p>
+<ol>
+<li><strong>FLOPs/Param ratio 下降</strong></li>
+<li><strong>MFU 上升</strong></li>
+<li><strong>硬件理论 FLOPs 提升（例如 fp16 / quantization）</strong></li>
+</ol>
+<p><img src="../../../../notes/论文笔记/精排/模型扩展/rankmixer_table6_cost.png" width="620" height="auto" alt/></p>
+<p>论文里给出的对比很有冲击力：</p>
+<ul>
+<li>参数量：<code>15.8M -> 1.1B</code>，约 <code>70x</code></li>
+<li>FLOPs：<code>107G -> 2106G</code>，约 <code>20.7x</code></li>
+<li>FLOPs/Param：<code>6.8 -> 1.9</code>，下降 <code>3.6x</code></li>
+<li>MFU：<code>4.47% -> 44.57%</code>，提升近 <code>10x</code></li>
+<li>硬件 FLOPs：<code>fp32 -> fp16</code>，再提升 <code>2x</code></li>
+<li>最终 latency：<code>14.5ms -> 14.3ms</code></li>
+</ul>
+<p>也就是说，虽然参数确实放大了两个数量级，但：</p>
+<ul>
+<li>模型结构让“每个参数平均对应的计算成本”下降了；</li>
+<li>大 GEMM 和更好的并行拓扑把 GPU 利用率拉起来了；</li>
+<li>fp16/量化进一步放大吞吐；</li>
+</ul>
+<p>最终把参数增长对延迟的压力抵消掉了。这正是论文标题里 “Scaling Up Ranking Models in Industrial Recommenders” 最关键的落地点。</p>
+<h2 id="8-我的理解与启发">8. 我的理解与启发<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-我的理解与启发" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="81-这篇论文真正的创新点不只是一个新-block">8.1 这篇论文真正的创新点不只是一个新 block<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#81-这篇论文真正的创新点不只是一个新-block" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果只看结构，RankMixer 可以被理解成 “token mixing + per-token FFN + sparse MoE”。但如果只把它当成一个新网络模块，会低估这篇论文。</p>
+<p>它真正重要的是提出了一套 <strong>hardware-aware 的 ranking scale-up 方法论</strong>：</p>
+<ul>
+<li>先承认推荐系统也需要 scaling；</li>
+<li>但不照搬 NLP 的 self-attention；</li>
+<li>而是根据推荐特征异构、线上 latency 敏感、GPU 并行需求高这些现实条件，重新设计交互骨干。</li>
+</ul>
+<h3 id="82-这篇论文为什么不迷信-attention">8.2 这篇论文为什么不迷信 Attention<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#82-这篇论文为什么不迷信-attention" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>很多推荐论文喜欢把更强的 attention 当成默认升级方向，但作者这里实际上做了一个很“克制”的判断：<strong>如果 feature space 本身是 heterogeneous 的，attention 的相似度假设就未必成立。</strong></p>
+<p>这点我觉得非常值得记住。推荐系统里的很多 token 不是词，也不是 patch，它们之间不是天然共享一个统一语义空间，所以并不一定越像 Transformer 越好。RankMixer 选择了更朴素但更贴场景的 token mixing，本质上是一种“不要让通用架构绑架任务结构”的思路。</p>
+<h3 id="83-工业推荐里的-scale不只是模型问题也是系统问题">8.3 工业推荐里的 scale，不只是模型问题，也是系统问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#83-工业推荐里的-scale不只是模型问题也是系统问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>这篇论文给人的另一个很强烈的感觉是：<strong>推荐系统的 scaling law 必须和 serving law 一起看。</strong></p>
+<p>如果一个模型 offline AUC 很好，但 MFU 很差、memory-bound、线上延迟不可控，那它在工业里并不是真的能 scale。RankMixer 把结构设计、路由设计、kernel 并行形态、量化这些因素一起考虑，说明工业 ranking 大模型不是单靠算法论文里的 block 创新就能落地的。</p>
+<h2 id="9-结论">9. 结论<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-结论" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>RankMixer 的核心贡献可以概括成一句话：<strong>把推荐排序模型从“手工异构交叉模块的拼装体”变成了一个可统一扩展、可高效并行、可工业落地的大规模 backbone。</strong></p>
+<p>它解决的问题非常实际：</p>
+<ul>
+<li>不是只追求更高离线指标；</li>
+<li>而是在工业延迟和 QPS 约束下，把参数规模、效果收益和线上成本真正解耦。</li>
+</ul>
+<p>从结果看，这篇论文最强的证据不是单点离线指标，而是下面这组组合拳：</p>
+<ul>
+<li>离线 scaling law 更陡；</li>
+<li>稀疏 MoE 还能继续扩；</li>
+<li>主推荐和广告都涨；</li>
+<li>70 倍参数增长下 latency 基本不变。</li>
+</ul>
+<p>如果后面我再回看这篇论文，我会重点记住三个点：</p>
+<ol>
+<li><strong>heterogeneous feature interaction 不一定适合 self-attention</strong></li>
+<li><strong>Per-token parameter isolation 是推荐场景里很有价值的 inductive bias</strong></li>
+<li><strong>工业 ranking 的 scale-up，必须同时优化结构、路由、MFU 和 serving</strong></li>
+</ol></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>关系图谱</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-11" aria-expanded="true"><h3>目录</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#rankmixer" data-for="rankmixer">RankMixer</a></li><li class="depth-1"><a href="#1-基本信息" data-for="1-基本信息">1. 基本信息</a></li><li class="depth-1"><a href="#11-相关论文" data-for="11-相关论文">1.1 相关论文</a></li><li class="depth-1"><a href="#2-一句话总结" data-for="2-一句话总结">2. 一句话总结</a></li><li class="depth-1"><a href="#3-论文在解决什么问题" data-for="3-论文在解决什么问题">3. 论文在解决什么问题</a></li><li class="depth-2"><a href="#31-背景" data-for="31-背景">3.1 背景</a></li><li class="depth-2"><a href="#32-作者的核心判断" data-for="32-作者的核心判断">3.2 作者的核心判断</a></li><li class="depth-1"><a href="#4-方法总览" data-for="4-方法总览">4. 方法总览</a></li><li class="depth-2"><a href="#41-整体结构" data-for="41-整体结构">4.1 整体结构</a></li><li class="depth-2"><a href="#42-为什么先做-tokenization" data-for="42-为什么先做-tokenization">4.2 为什么先做 tokenization</a></li><li class="depth-1"><a href="#5-rankmixer-为什么这样设计" data-for="5-rankmixer-为什么这样设计">5. RankMixer 为什么这样设计</a></li><li class="depth-2"><a href="#51-multi-head-token-mixing不用-attention而是做-token-重组" data-for="51-multi-head-token-mixing不用-attention而是做-token-重组">5.1 Multi-head Token Mixing：不用 Attention，而是做 token 重组</a></li><li class="depth-2"><a href="#52-per-token-ffn每个-token-一套独立参数" data-for="52-per-token-ffn每个-token-一套独立参数">5.2 Per-token FFN：每个 token 一套独立参数</a></li><li class="depth-2"><a href="#53-sparse-moe继续放大参数但不按传统-top-k-路由来做" data-for="53-sparse-moe继续放大参数但不按传统-top-k-路由来做">5.3 Sparse-MoE：继续放大参数，但不按传统 Top-k 路由来做</a></li><li class="depth-2"><a href="#54-扩展方向" data-for="54-扩展方向">5.4 扩展方向</a></li><li class="depth-1"><a href="#6-实验是怎么证明这套思路有效的" data-for="6-实验是怎么证明这套思路有效的">6. 实验是怎么证明这套思路有效的</a></li><li class="depth-2"><a href="#61-实验设置" data-for="61-实验设置">6.1 实验设置</a></li><li class="depth-2"><a href="#62-和-sota-的对比" data-for="62-和-sota-的对比">6.2 和 SOTA 的对比</a></li><li class="depth-2"><a href="#63-scaling-law为什么作者说它更适合-scale" data-for="63-scaling-law为什么作者说它更适合-scale">6.3 Scaling law：为什么作者说它更适合 scale</a></li><li class="depth-2"><a href="#64-消融实验哪些模块是关键" data-for="64-消融实验哪些模块是关键">6.4 消融实验：哪些模块是关键</a></li><li class="depth-2"><a href="#65-sparse-moe为什么它能继续往上扩" data-for="65-sparse-moe为什么它能继续往上扩">6.5 Sparse-MoE：为什么它能继续往上扩</a></li><li class="depth-1"><a href="#7-线上结果与工程解释" data-for="7-线上结果与工程解释">7. 线上结果与工程解释</a></li><li class="depth-2"><a href="#71-在线效果" data-for="71-在线效果">7.1 在线效果</a></li><li class="depth-2"><a href="#72-为什么-1b-参数没有把线上延迟打爆" data-for="72-为什么-1b-参数没有把线上延迟打爆">7.2 为什么 1B 参数没有把线上延迟打爆</a></li><li class="depth-1"><a href="#8-我的理解与启发" data-for="8-我的理解与启发">8. 我的理解与启发</a></li><li class="depth-2"><a href="#81-这篇论文真正的创新点不只是一个新-block" data-for="81-这篇论文真正的创新点不只是一个新-block">8.1 这篇论文真正的创新点不只是一个新 block</a></li><li class="depth-2"><a href="#82-这篇论文为什么不迷信-attention" data-for="82-这篇论文为什么不迷信-attention">8.2 这篇论文为什么不迷信 Attention</a></li><li class="depth-2"><a href="#83-工业推荐里的-scale不只是模型问题也是系统问题" data-for="83-工业推荐里的-scale不只是模型问题也是系统问题">8.3 工业推荐里的 scale，不只是模型问题，也是系统问题</a></li><li class="depth-1"><a href="#9-结论" data-for="9-结论">9. 结论</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>反向链接</h3><ul id="list-2" class="overflow"><li><a href="../../../../notes/论文笔记/精排/模型扩展/HyFormer" class="internal">HyFormer</a></li><li><a href="../../../../notes/论文笔记/精排/模型扩展/OneTrans" class="internal">OneTrans</a></li><li><a href="../../../../notes/论文笔记/精排/模型扩展/RankMixer" class="internal">RankMixer</a></li><li><a href="../../../../notes/论文笔记/精排/模型扩展/UniMixer" class="internal">UniMixer</a></li><li><a href="../../../../notes/论文笔记/论文分类索引" class="internal">论文分类索引</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul><li><a href="https://github.com/chaolistat">GitHub</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../../../postscript.js" type="module" data-persist="true"></script></html>
