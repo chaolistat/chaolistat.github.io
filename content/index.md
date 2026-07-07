@@ -8,19 +8,19 @@ title: 首页
 
 ## 入口
 
-- [[个人思考|个人思考]]
-- [[论文笔记|论文笔记]]
+- [[个人思考/index|个人思考]]
+- [[论文笔记/index|论文笔记]]
 - [[关于|关于]]
 
 ## 最近更新
 
-- [[notes/论文笔记/重排/LLM重排/LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation.|LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation]] · 2026-06-12
-- [[notes/论文笔记/重排/调研综述/推荐系统重排最新进展.|推荐系统重排最新进展]] · 2026-06-10
-- [[notes/论文笔记/重排/生成式重排/YOLOR.|YOLOR]] · 2026-06-10
-- [[notes/论文笔记/重排/可控多目标/MultiTRON.|MultiTRON]] · 2026-06-10
-- [[notes/论文笔记/重排/LLM重排/LLM-Diversity-Re-ranking.|LLM-Diversity-Re-ranking]] · 2026-06-10
-- [[notes/论文笔记/重排/LLM重排/LLM4Rerank.|LLM4Rerank]] · 2026-06-10
-- [[notes/论文笔记/重排/LLM重排/InvariRank.|InvariRank]] · 2026-06-10
-- [[notes/论文笔记/重排/生成式重排/CONGRATS.|CONGRATS]] · 2026-06-10
-- [[notes/论文笔记/重排/可控多目标/CMR.|CMR]] · 2026-06-10
-- [[notes/论文笔记/重排/系统配置优化/AgenticRecTune.|AgenticRecTune]] · 2026-06-10
+- [[论文笔记/重排/LLM重排/LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation.|LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation]] · 2026-06-12
+- [[论文笔记/重排/生成式重排/YOLOR.|YOLOR]] · 2026-06-10
+- [[论文笔记/重排/可控多目标/MultiTRON.|MultiTRON]] · 2026-06-10
+- [[论文笔记/重排/LLM重排/LLM4Rerank.|LLM4Rerank]] · 2026-06-10
+- [[论文笔记/重排/LLM重排/LLM-Diversity-Re-ranking.|LLM-Diversity-Re-ranking]] · 2026-06-10
+- [[论文笔记/重排/LLM重排/InvariRank.|InvariRank]] · 2026-06-10
+- [[论文笔记/重排/生成式重排/CONGRATS.|CONGRATS]] · 2026-06-10
+- [[论文笔记/重排/可控多目标/CMR.|CMR]] · 2026-06-10
+- [[论文笔记/重排/系统配置优化/AgenticRecTune.|AgenticRecTune]] · 2026-06-10
+- [[论文笔记/重排/调研综述/推荐系统重排最新进展.|推荐系统重排最新进展]] · 2026-06-10

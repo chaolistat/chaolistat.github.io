@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr"><head><title>Pantheon</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans SC:wght@400;700&amp;family=Noto Sans SC:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Chaoli 的个人博客"/><meta property="og:title" content="Pantheon"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Pantheon"/><meta name="twitter:description" content="Pantheon 1."/><meta property="og:description" content="Pantheon 1."/><meta property="og:image:alt" content="Pantheon 1."/><meta property="og:image" content="https://chaolistat.github.io/static/og-image.png"/><meta property="og:image:url" content="https://chaolistat.github.io/static/og-image.png"/><meta name="twitter:image" content="https://chaolistat.github.io/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="chaolistat.github.io"/><meta property="og:url" content="https://chaolistat.github.io/论文笔记/精排/LTR与多目标融合/Pantheon"/><meta property="twitter:url" content="https://chaolistat.github.io/论文笔记/精排/LTR与多目标融合/Pantheon"/><link rel="icon" href="../../../static/icon.png"/><meta name="description" content="Pantheon 1."/><meta name="generator" content="Quartz"/><link href="../../../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFVzZXJzXFxjaGFvbFxcRGVza3RvcFxc5o6o6I2Q6K665paH6ZiF6K+7XFxjaGFvbGlzdGF0LmdpdGh1Yi5pb1xccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://chaolistat.github.io/index.xml"/></head><body data-slug="论文笔记/精排/LTR与多目标融合/Pantheon"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../../..">Chaoli 的个人博客</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>搜索</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="搜索些什么" placeholder="搜索些什么"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="暗色模式"><title>暗色模式</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="亮色模式"><title>亮色模式</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="阅读模式"><title>阅读模式</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-20"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>探索</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-20" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../论文笔记/">论文笔记</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../论文笔记/精排/">精排</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../论文笔记/精排/LTR与多目标融合/">LTR与多目标融合</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Pantheon</a></div></nav><h1 class="article-title">Pantheon</h1><p show-comma="true" class="content-meta"><time datetime="2026-06-05T16:00:00.000Z">2026年6月06日</time><span>18分钟阅读</span></p><ul class="tags"><li><a href="../../../tags/paper-note" class="internal tag-link">paper-note</a></li><li><a href="../../../tags/reward-sys" class="internal tag-link">reward-sys</a></li><li><a href="../../../tags/recommender" class="internal tag-link">recommender</a></li><li><a href="../../../tags/live-streaming" class="internal tag-link">live-streaming</a></li><li><a href="../../../tags/ranking" class="internal tag-link">ranking</a></li><li><a href="../../../tags/multi-objective" class="internal tag-link">multi-objective</a></li><li><a href="../../../tags/ensemble-ranking" class="internal tag-link">ensemble-ranking</a></li><li><a href="../../../tags/pareto-optimization" class="internal tag-link">pareto-optimization</a></li><li><a href="../../../tags/fine-ranking" class="internal tag-link">fine-ranking</a></li><li><a href="../../../tags/ltr" class="internal tag-link">ltr</a></li><li><a href="../../../tags/multi-task-fusion" class="internal tag-link">multi-task-fusion</a></li></ul></div></div><article class="popover-hint"><h1 id="pantheon">Pantheon<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pantheon" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="1-基本信息">1. 基本信息<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-基本信息" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>标题：Pantheon: Personalized Multi-objective Ensemble Sort via Iterative Pareto Policy Optimization</li>
+<li>作者：Jiangxia Cao, Pengbo Xu, Yin Cheng, Kaiwei Guo, Jian Tang, Shijun Wang, Dewei Leng, Shuang Yang, Zhaojie Liu, Yanan Niu, Guorui Zhou, Kun Gai</li>
+<li>机构：Kuaishou Technology</li>
+<li>时间：2025</li>
+<li>会议：CIKM 2025</li>
+<li>arXiv：<a href="https://arxiv.org/abs/2505.13894" class="external">https://arxiv.org/abs/2505.13894<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>关键词：Ensemble Sort、Multi-objective Optimization、Pareto、Live-streaming Recommendation、Joint Training</li>
+<li>pdf位置：<code>C:\Users\chaol\Desktop\推荐论文阅读\reward sys\Pantheon.pdf</code></li>
+<li>笔记位置：<code>论文笔记/精排/LTR与多目标融合/Pantheon.md</code></li>
+<li>分类：精排 / LTR与多目标融合</li>
+</ul>
+<h2 id="2-相关论文">2. 相关论文<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-相关论文" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../../../论文笔记/精排/LTR与多目标融合/EMER" class="internal" data-slug="论文笔记/精排/LTR与多目标融合/EMER">EMER</a>：同样是在工业推荐里把“多目标融合排序”从人工公式改成端到端模型，但路线不同。Pantheon 依赖 ranking hidden-state + 标量化多目标损失 + IPPO 调权；EMER 更强调 request-wise comparative modeling 和 offline-online 对齐。</li>
+<li><a href="../../../论文笔记/精排/LTR与多目标融合/UnifiedRL" class="internal" data-slug="论文笔记/精排/LTR与多目标融合/UnifiedRL">UnifiedRL</a>：更早的工业 RL-MTF 路线，把 multi-task fusion 写成 session-level 强化学习调权问题，核心是“定制 exploration policy + 渐进训练 + 软化 OOD 约束”；Pantheon 则放弃 RL 调权，转向 hidden-state 继承和 Pareto 权重搜索的可学习融合器。</li>
+</ul>
+<h2 id="3-一句话总结">3. 一句话总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-一句话总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Pantheon 想替代工业推荐里长期依赖人工经验调参的 ensemble sort 公式：它把融合排序做成 ranking 模型上的一个联合训练插件，直接吃多任务 tower 的 hidden-state 而不是只吃压缩后的 Pxtr，再用正权重标量化损失和 IPPO 迭代调权，自动逼近更好的 Pareto trade-off。</p>
+<h2 id="4-论文在解决什么问题">4. 论文在解决什么问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-论文在解决什么问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="41-为什么-ensemble-sort-是工业推荐链路里最难自动化的一段">4.1 为什么 ensemble sort 是工业推荐链路里最难自动化的一段<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#41-为什么-ensemble-sort-是工业推荐链路里最难自动化的一段" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>论文把工业 RecSys 拆成三段：</p>
+<ol>
+<li>Retrieval 先从超大 item 池里找几百个候选。</li>
+<li>Ranking 对每个候选逐个估多个目标概率，也就是一组 <code>Pxtr</code>。</li>
+<li>Ensemble sort 再把这些 <code>Pxtr</code> 融成一个最终分数，选出最该曝光的少量 item。</li>
+</ol>
+<p>真正难的是第 3 步。<br/>
+因为它直接决定多目标之间怎么折中，比如点击、长看、站内停留、礼物、关注等。工业系统里这一步往往还是手写公式，靠一堆人工权重 <code>α/β/γ/...</code> 去调。论文认为它的问题不只是“麻烦”，而是：</p>
+<ul>
+<li>权重强依赖专家经验和大量 A/B 试错；</li>
+<li>公式再复杂，本质仍是预定义函数族，表达上限受限；</li>
+<li>当某个目标涨了、另一个目标掉了时，很难系统地找到新的 Pareto 平衡点。</li>
+</ul>
+<h3 id="42-figure-1快手直播场景天然就是多目标系统">4.2 Figure 1：快手直播场景天然就是多目标系统<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#42-figure-1快手直播场景天然就是多目标系统" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../论文笔记/精排/LTR与多目标融合/pantheon_fig1_multi_objectives.png" width="520" height="auto" alt/></p>
+<p>Figure 1 不是方法图，但它先把问题说清楚了：</p>
+<ul>
+<li>用户既可能在 Out-Room 刷外部流，也可能点进 In-Room 深看；</li>
+<li>正反馈不止一种，有隐式反馈 <code>effective-view / long-view</code>，也有显式反馈 <code>click / follow / like / comment / collect / forward</code>。</li>
+</ul>
+<p>这意味着最终排序目标不可能退化成“只优化一个分数”。<br/>
+Pantheon 的核心动机其实就是：不要再手动猜这些反馈该如何组合，而是让模型自己从数据里学一个更稳的折中。</p>
+<h3 id="43-figure-2pantheon-插在-ranking-之后但不是简单替换公式">4.3 Figure 2：Pantheon 插在 ranking 之后，但不是简单替换公式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#43-figure-2pantheon-插在-ranking-之后但不是简单替换公式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../论文笔记/精排/LTR与多目标融合/pantheon_fig2_rec_chain.png" width="900" height="auto" alt/></p>
+<p>Figure 2 把链路关系画得很直白：</p>
+<ul>
+<li><code>(a)</code> Retrieval 先靠 user/item disentangled 表征找回几百个候选；</li>
+<li><code>(b)</code> Ranking 用多任务结构分别输出 <code>Pctr / Plvtr / ...</code>；</li>
+<li><code>(c)</code> 传统 ensemble sort 再把这些数值用公式揉成一个最终分数。</li>
+</ul>
+<p>Pantheon 的目标不是否定 retrieval 或 ranking，而是把 <code>(c)</code> 从“公式层”抬成“模型层”。<br/>
+也就是说，它仍然依附现有 ranking 系统，但不再只消费 <code>Pxtr</code> 这些最终概率，而是直接复用 ranking 内部更细粒度的表征。</p>
+<h2 id="5-方法总览">5. 方法总览<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-方法总览" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="51-figure-3pantheon--左边的融合打分插件--右边的-ippo-调权闭环">5.1 Figure 3：Pantheon = 左边的融合打分插件 + 右边的 IPPO 调权闭环<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#51-figure-3pantheon--左边的融合打分插件--右边的-ippo-调权闭环" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../论文笔记/精排/LTR与多目标融合/pantheon_fig3_arch_ippo.png" width="900" height="auto" alt/></p>
+<p>Figure 3 分成两部分：</p>
+<ul>
+<li>左图 <code>(a)</code> 是模型结构。Pantheon 从多任务 ranking 模块里取各任务 tower 的 hidden-state，再拼上额外的 user/item 特征，经过一个 <code>Ensemble_Encoder</code> 输出最终 <code>Score</code>。</li>
+<li>右图 <code>(b)</code> 是训练策略。它维护一个 <code>base model</code> 和一个 <code>reference model</code>，通过规则化的“自博弈”过程不断调整多目标损失权重，尝试找到更优的 Pareto frontier。</li>
+</ul>
+<p>论文真正的贡献不是单个 MLP，而是把“模型输入怎么设计”和“多目标权重怎么自动找”一起做了。</p>
+<h3 id="52-fusion-score-generation为什么要吃-hidden-state而不是只吃-pxtr">5.2 Fusion Score Generation：为什么要吃 hidden-state，而不是只吃 Pxtr<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#52-fusion-score-generation为什么要吃-hidden-state而不是只吃-pxtr" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pantheon 的输入不是几个压缩后的概率值，而是：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1491em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord">ItemFea</span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">Stop-Gradient</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8436em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">Stop-Gradient</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">UserFea</span></span><span class="mclose">}</span></span></span></span></span>
+<p>其中：</p>
+<ul>
+<li><code>t^{xtr} ∈ R^d</code> 是 ranking 各任务 tower 输出的 hidden-state；</li>
+<li><code>ItemFea / UserFea ∈ R^d</code> 是 Pantheon 自己额外引入、且与 ranking 不共享的一组可学习特征；</li>
+<li>最后由 <code>Ensemble_Encoder(P)</code> 输出 <code>Score ∈ (0,1)</code>。</li>
+</ul>
+<p>这一步最值得记的是两个设计点：</p>
+<ol>
+<li>
+<p><strong>representation inheritance</strong>
+论文认为 <code>Pxtr</code> 只是 tower 表征经过最后一层预测头后的数值压缩，信息已经严重损失。<br/>
+直接拿 hidden-state 做输入，相当于把“各目标为什么高/低”的上下文也带进融合层，而不是只看几个最终概率。</p>
+</li>
+<li>
+<p><strong>stop-gradient</strong>
+这里不是普通的 joint training，而是“共享前向、隔离反向”。<br/>
+Pantheon 要复用 ranking tower 的 hidden-state，但不希望 ensemble 分支的梯度反向改写 ranking 分支原本的多任务目标，因此对 <code>t^{xtr}</code> 做 <code>stop-gradient</code>。</p>
+</li>
+</ol>
+<p>这个操作成立的前提是：Pantheon 把这些 tower hidden-state 当作固定特征源，而不是继续联动优化 ranking 头。<br/>
+如果不做 <code>stop-gradient</code>，那么 scalarized fusion loss 会直接干预原本各 <code>Pxtr</code> 的训练，可能把 ranking 模块推向“更利于融合分数”的方向，而不是“更利于各单任务估计”的方向，导致两条支路互相污染。</p>
+<h3 id="53-额外-useritem-特征为什么重要">5.3 额外 user/item 特征为什么重要<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#53-额外-useritem-特征为什么重要" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>论文特别提到，Pantheon 还引入了一组不与 ranking 共享的 user/item 特征，并观察到它们会明显加速收敛。</p>
+<p>我的理解是：<br/>
+如果 Pantheon 完全只读 ranking hidden-state，它更像一个“后接的读出层”；加入不共享特征后，它才有能力学习一些 ranking 主干里没显式保留、但对最终融合权衡很重要的个性化偏置。</p>
+<h3 id="54-单一融合分数如何兼容多个目标">5.4 单一融合分数如何兼容多个目标<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#54-单一融合分数如何兼容多个目标" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pantheon 只输出一个标量 <code>Score</code>，但训练时会把多个目标的 BCE loss 加权求和：</p>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">Pantheon</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.3277em;vertical-align:-1.2777em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span>
+<p>这里最容易被忽略的不是公式本身，而是它后面的约束：</p>
+<ul>
+<li>论文要求权重必须是<strong>正数</strong>；</li>
+<li>只要所有 <code>w_i > 0</code>，标量化损失的局部最优点就是多目标问题的局部 Pareto 最优点；</li>
+<li>若把所有权重整体乘同一个正数 <code>k</code>，最优参数与输出分布不变，所以真正起作用的是权重比值 <code>w_i / w_j</code>，不是绝对尺度。</li>
+</ul>
+<p>这解释了两件事：</p>
+<ol>
+<li>为什么论文一直在强调“relative positive weights”而不是绝对值；</li>
+<li>为什么后面 IPPO 调的是各目标的相对权重结构，本质上是在移动 Pareto frontier 上的位置。</li>
+</ol>
+<h3 id="55-ippo它更像规则化-self-play不是复杂-rl-算法">5.5 IPPO：它更像规则化 self-play，不是复杂 RL 算法<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#55-ippo它更像规则化-self-play不是复杂-rl-算法" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pantheon 把调权过程写成 RL 视角：</p>
+<ul>
+<li><code>State</code>：当前各目标的正权重 <code>w^{xtr}</code></li>
+<li><code>Agent</code>：当前可训练的 Pantheon 模型</li>
+<li><code>Environment</code>：实时流式训练和评估日志</li>
+<li><code>Reward</code>：reference model 是否在所有 GAUC 指标上同时压过 base model</li>
+<li><code>Action</code>：替换 base model，或给某个目标权重加一个小步长 <code>Δ=0.1/N</code></li>
+</ul>
+<p>但要注意，它不是训练一个神经策略网络去输出动作。<br/>
+论文实际落地的是<strong>rule-based policy</strong>：</p>
+<ol>
+<li>若 reference model 在全部评估指标上都优于 base model，就直接替换 base model；</li>
+<li>否则，找到 GAUC gap 最大的目标，把对应权重往上调一个小步长，再继续下一轮。</li>
+</ol>
+<p>所以 IPPO 的本质不是“复杂 RL 算法”，而是借 RL 的状态-动作-奖励语言，把多目标调权过程写成一个自动搜索 Pareto frontier 的闭环。</p>
+<p>它成立的关键前提有两个：</p>
+<ul>
+<li>评估指标必须方向一致，才能判断“是否全都更好”；</li>
+<li>权重更新步长要足够小，否则 reference model 可能在目标之间来回震荡，难以稳定收敛。</li>
+</ul>
+<h2 id="6-score-distribution-discussion">6. Score Distribution Discussion<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-score-distribution-discussion" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>论文单独拿一节讲 fusion score 的分布，这点很工业。</p>
+<ul>
+<li><strong>均值决定曝光量</strong>：score 均值越大，直播内容整体更容易被分发。</li>
+<li><strong>方差决定曝光位置</strong>：score 方差越大，直播内容越可能更早插到短视频流里。</li>
+</ul>
+<p>因此作者在 A/B 前会做一个 <code>mean-variance calibration</code>，把实验组 Pantheon 的输出分布对齐到基线模型。<br/>
+这一步很关键，因为否则线上差异可能来自“分数分布偏移”，而不是模型确实学到了更好的排序逻辑。</p>
+<h2 id="7-实验与结果">7. 实验与结果<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-实验与结果" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="71-设置">7.1 设置<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#71-设置" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>场景：快手直播推荐</li>
+<li>规模：超过 4 亿用户，数十亿曝光日志</li>
+<li>离线指标：wide-used <code>GAUC</code></li>
+<li>线上主要指标：Clicked User、Watch Time、Gift Count，以及 Exposure</li>
+</ul>
+<p>这说明 Pantheon 不是小规模离线实验，而是直接替换线上多年使用的 formula-based ensemble sort。</p>
+<h3 id="72-table-1--table-2--table-3主结果线上收益和消融都支持作者主张">7.2 Table 1 + Table 2 + Table 3：主结果、线上收益和消融都支持作者主张<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#72-table-1--table-2--table-3主结果线上收益和消融都支持作者主张" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../../论文笔记/精排/LTR与多目标融合/pantheon_table1_3_results.png" width="950" height="auto" alt/></p>
+<p>先看离线主结果 Table 1。<br/>
+相对旧公式，Pantheon 在所有目标上都涨，论文总结平均提升约 <code>+1.62%</code>。几个代表值：</p>
+<ul>
+<li><code>wtr</code>：<code>57.61% -> 59.94%</code>，提升 <code>+2.33%</code></li>
+<li><code>ltr</code>：<code>68.32% -> 71.62%</code>，提升 <code>+3.30%</code></li>
+<li><code>ctr</code>：<code>61.21% -> 63.76%</code>，提升 <code>+2.55%</code></li>
+<li><code>evtr</code>：<code>60.75% -> 62.99%</code>，提升 <code>+2.24%</code></li>
+</ul>
+<p>这说明它至少没有因为“统一成一个融合分数”而丢掉原来多目标结构里的主要信息。</p>
+<p>再看线上 Table 2。<br/>
+作者强调在他们系统里，<code>0.1%</code> 的 clicked user 提升都已显著，而 Pantheon 在 4 个 scenario 上分别做到：</p>
+<ul>
+<li><code>Clicked User</code>：<code>+1.010% / +1.671% / +1.039% / +0.518%</code></li>
+<li><code>Watch Time</code>：<code>+0.722% / +1.766% / +0.257% / +1.292%</code></li>
+<li><code>Follow</code>：<code>+2.246% / +2.638% / +1.297% / +0.208%</code></li>
+</ul>
+<p>这组结果支撑了论文最核心的工程 claim：<br/>
+Pantheon 不是“离线指标更好看”，而是真的能替换线上公式并带来稳定收益。</p>
+<p>最后看 Table 3 的消融，论文验证了三层结论：</p>
+<ol>
+<li><strong><code>Pxtr&amp;MLP</code> 已经比旧公式好</strong>
+例如 <code>wtr: 57.61% -> 59.20%</code>。这说明 IPPO + 可学习融合器本身就有价值。</li>
+<li><strong><code>Hidden-State&amp;MLP</code> 继续变好</strong>
+例如 <code>ltr: 70.93% -> 71.62%</code>。这说明 hidden-state 确实比压缩后的 Pxtr 含有更多可供融合利用的信息。</li>
+<li><strong><code>Hidden-State&amp;Transformer</code> 最好</strong>
+例如 <code>wtr: 59.94% -> 60.56%</code>，<code>ltr: 71.62% -> 72.15%</code>。这说明更强的 ensemble encoder 仍能继续挖出收益。</li>
+</ol>
+<p>需要注意的是，Figure 3(a) 主图里实际画的是 MLP 版 Pantheon；Transformer 出现在消融增强版里。<br/>
+所以论文的“最终最好结果”来自更强 encoder，但整篇 paper 的主叙事仍然是 hidden-state 继承 + IPPO 调权。</p>
+<h3 id="73-ecology-结果pantheon-不是简单把流量往头部目标上堆">7.3 Ecology 结果：Pantheon 不是简单把流量往头部目标上堆<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#73-ecology-结果pantheon-不是简单把流量往头部目标上堆" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Table 4 和 Table 5 没有像主表那样显眼，但很重要。</p>
+<p>从 Table 4 看：</p>
+<ul>
+<li>对偏 <code>In-Room</code> 的高活跃用户，曝光下降 <code>-2.2%</code>，但 <code>In-Room Eff-View</code> 反而提升 <code>+3.5%</code></li>
+<li>对 <code>Out-Room</code> 的中活跃用户，曝光提升 <code>+6.4%</code>，对应 <code>Eff-View</code> 提升 <code>+12.9%</code></li>
+</ul>
+<p>作者据此认为，Pantheon 把部分流量从高价值头部人群释放出来，分发给更广泛用户，同时没有牺牲体验，反而改善了有效观看质量。</p>
+<p>Table 5 从行为模式上进一步说明它不是只偏向单一目标：</p>
+<ul>
+<li><code>Long-View</code>：<code>+10.84%</code></li>
+<li><code>Interaction</code>：<code>+9.13%</code></li>
+<li><code>Gift</code>：<code>+1.87%</code></li>
+<li><code>Long&amp;Inter</code>：<code>+5.32%</code></li>
+</ul>
+<p>我的理解是：<br/>
+IPPO 并不是把某个最强目标硬拉上去，而是在“多个目标不能互相明显伤害”的约束下找到更稳的流量分配方式。</p>
+<h3 id="74-objective-dependencepantheon-维持了原有重要性排序但更平衡">7.4 Objective Dependence：Pantheon 维持了原有重要性排序，但更平衡<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#74-objective-dependencepantheon-维持了原有重要性排序但更平衡" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>论文用 Kendall’s <code>τ</code> 分析融合分数与各 Pxtr 的相关性。结论不是“Pantheon 完全摆脱了原有 Pxtr”，而是：</p>
+<ul>
+<li>它仍维持了与旧公式近似一致的目标重要性顺序；</li>
+<li>但绝对相关强度更平滑，不会过度被头部目标牵着走。</li>
+</ul>
+<p>这与前面的 hidden-state 设计是一致的。<br/>
+因为输入不再只有几个最终概率值，Pantheon 可以在更丰富的表征空间里做折中，从而减少 top objective 的数值抖动对最终排序的放大效应。</p>
+<h2 id="8-理解启发与局限">8. 理解、启发与局限<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-理解启发与局限" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="81-这篇论文最值钱的地方">8.1 这篇论文最值钱的地方<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#81-这篇论文最值钱的地方" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>我觉得 Pantheon 最有价值的不是“把公式换成 MLP”，而是它给了一套工业上可执行的替换路径：</p>
+<ol>
+<li>不推翻原有 ranking，而是在其上做 plugin；</li>
+<li>不直接吃 <code>Pxtr</code>，而是继承 hidden-state；</li>
+<li>不靠人工权重调参，而是把调权闭环自动化。</li>
+</ol>
+<p>这三步合在一起，才让“公式融合”真正变成“模型融合”。</p>
+<h3 id="82-容易忽略的隐含条件">8.2 容易忽略的隐含条件<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#82-容易忽略的隐含条件" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>Ranking tower 的 hidden-state 必须本身足够稳定、信息量足够大，否则 inheritance 没有意义。</li>
+<li><code>stop-gradient</code> 依赖清晰的模块边界；如果工程上 Pantheon 与 ranking 深度耦合，梯度隔离就不容易维持。</li>
+<li>IPPO 默认各目标都能被同一套离线评估指标稳定比较，否则“all best?” 这个判断会不可靠。</li>
+<li>mean-variance calibration 很关键，否则线上 A/B 可能混入分布偏移偏差。</li>
+</ul>
+<h3 id="83-这篇论文没有彻底回答的问题">8.3 这篇论文没有彻底回答的问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#83-这篇论文没有彻底回答的问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>它把调权过程写成 RL，但真实策略仍是规则化更新，泛化能力和样本效率没有被展开分析。</li>
+<li>主文没有细讲为什么某些场景下 exposure 与体验可以同时提升，更多像经验观察。</li>
+<li>最强结果来自 Transformer encoder，但论文没有继续拆解“强在哪一类交互结构”。</li>
+</ul>
+<h2 id="9-结论与记忆点">9. 结论与记忆点<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-结论与记忆点" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Pantheon 可以记成一句话：</p>
+<blockquote>
+<p>在工业推荐里，把多目标融合排序从“人工公式调权”升级成“hidden-state 继承 + 单分数联合训练 + Pareto 调权搜索”的插件式模型。</p>
+</blockquote>
+<p>如果以后再看同类论文，可以优先问它三件事：</p>
+<ol>
+<li>它融合时吃的是最终概率，还是更细粒度表征？</li>
+<li>它多目标权重是人工定的，还是会自动搜索 Pareto trade-off？</li>
+<li>它有没有控制 score distribution 带来的线上偏差？</li>
+<li><span class="text-highlight">本文通过控制权重来引导模型优化方向，进行得到帕累托更优的点，能否通过过滤数据或者其他方式得到？</span></li>
+</ol>
+<p>Pantheon 给这三问都提供了比较完整的工业答案，这也是它最值得记住的地方。</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>关系图谱</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-6" aria-expanded="true"><h3>目录</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#pantheon" data-for="pantheon">Pantheon</a></li><li class="depth-1"><a href="#1-基本信息" data-for="1-基本信息">1. 基本信息</a></li><li class="depth-1"><a href="#2-相关论文" data-for="2-相关论文">2. 相关论文</a></li><li class="depth-1"><a href="#3-一句话总结" data-for="3-一句话总结">3. 一句话总结</a></li><li class="depth-1"><a href="#4-论文在解决什么问题" data-for="4-论文在解决什么问题">4. 论文在解决什么问题</a></li><li class="depth-2"><a href="#41-为什么-ensemble-sort-是工业推荐链路里最难自动化的一段" data-for="41-为什么-ensemble-sort-是工业推荐链路里最难自动化的一段">4.1 为什么 ensemble sort 是工业推荐链路里最难自动化的一段</a></li><li class="depth-2"><a href="#42-figure-1快手直播场景天然就是多目标系统" data-for="42-figure-1快手直播场景天然就是多目标系统">4.2 Figure 1：快手直播场景天然就是多目标系统</a></li><li class="depth-2"><a href="#43-figure-2pantheon-插在-ranking-之后但不是简单替换公式" data-for="43-figure-2pantheon-插在-ranking-之后但不是简单替换公式">4.3 Figure 2：Pantheon 插在 ranking 之后，但不是简单替换公式</a></li><li class="depth-1"><a href="#5-方法总览" data-for="5-方法总览">5. 方法总览</a></li><li class="depth-2"><a href="#51-figure-3pantheon--左边的融合打分插件--右边的-ippo-调权闭环" data-for="51-figure-3pantheon--左边的融合打分插件--右边的-ippo-调权闭环">5.1 Figure 3：Pantheon = 左边的融合打分插件 + 右边的 IPPO 调权闭环</a></li><li class="depth-2"><a href="#52-fusion-score-generation为什么要吃-hidden-state而不是只吃-pxtr" data-for="52-fusion-score-generation为什么要吃-hidden-state而不是只吃-pxtr">5.2 Fusion Score Generation：为什么要吃 hidden-state，而不是只吃 Pxtr</a></li><li class="depth-2"><a href="#53-额外-useritem-特征为什么重要" data-for="53-额外-useritem-特征为什么重要">5.3 额外 user/item 特征为什么重要</a></li><li class="depth-2"><a href="#54-单一融合分数如何兼容多个目标" data-for="54-单一融合分数如何兼容多个目标">5.4 单一融合分数如何兼容多个目标</a></li><li class="depth-2"><a href="#55-ippo它更像规则化-self-play不是复杂-rl-算法" data-for="55-ippo它更像规则化-self-play不是复杂-rl-算法">5.5 IPPO：它更像规则化 self-play，不是复杂 RL 算法</a></li><li class="depth-1"><a href="#6-score-distribution-discussion" data-for="6-score-distribution-discussion">6. Score Distribution Discussion</a></li><li class="depth-1"><a href="#7-实验与结果" data-for="7-实验与结果">7. 实验与结果</a></li><li class="depth-2"><a href="#71-设置" data-for="71-设置">7.1 设置</a></li><li class="depth-2"><a href="#72-table-1--table-2--table-3主结果线上收益和消融都支持作者主张" data-for="72-table-1--table-2--table-3主结果线上收益和消融都支持作者主张">7.2 Table 1 + Table 2 + Table 3：主结果、线上收益和消融都支持作者主张</a></li><li class="depth-2"><a href="#73-ecology-结果pantheon-不是简单把流量往头部目标上堆" data-for="73-ecology-结果pantheon-不是简单把流量往头部目标上堆">7.3 Ecology 结果：Pantheon 不是简单把流量往头部目标上堆</a></li><li class="depth-2"><a href="#74-objective-dependencepantheon-维持了原有重要性排序但更平衡" data-for="74-objective-dependencepantheon-维持了原有重要性排序但更平衡">7.4 Objective Dependence：Pantheon 维持了原有重要性排序，但更平衡</a></li><li class="depth-1"><a href="#8-理解启发与局限" data-for="8-理解启发与局限">8. 理解、启发与局限</a></li><li class="depth-2"><a href="#81-这篇论文最值钱的地方" data-for="81-这篇论文最值钱的地方">8.1 这篇论文最值钱的地方</a></li><li class="depth-2"><a href="#82-容易忽略的隐含条件" data-for="82-容易忽略的隐含条件">8.2 容易忽略的隐含条件</a></li><li class="depth-2"><a href="#83-这篇论文没有彻底回答的问题" data-for="83-这篇论文没有彻底回答的问题">8.3 这篇论文没有彻底回答的问题</a></li><li class="depth-1"><a href="#9-结论与记忆点" data-for="9-结论与记忆点">9. 结论与记忆点</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>反向链接</h3><ul id="list-2" class="overflow"><li><a href="../../../论文笔记/精排/LTR与多目标融合/EMER" class="internal">EMER</a></li><li><a href="../../../论文笔记/精排/LTR与多目标融合/UnifiedRL" class="internal">UnifiedRL</a></li><li><a href="../../../论文笔记/论文分类索引" class="internal">论文分类索引</a></li><li><a href="../../../论文笔记/重排/调研综述/推荐系统重排最新进展" class="internal">推荐系统重排最新进展</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul><li><a href="https://github.com/chaolistat">GitHub</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../../postscript.js" type="module" data-persist="true"></script></html>
