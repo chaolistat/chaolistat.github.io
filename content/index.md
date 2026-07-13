@@ -15,10 +15,10 @@ title: 首页
 
 ## 最近更新
 
+- [[论文笔记/精排/LTR与多目标融合/UnifiedRL|UnifiedRL]] · 2026-07-12
+- [[论文笔记/重排/长期价值/Two-Stage Constrained Actor-Critic|Two-Stage Constrained Actor-Critic]] · 2026-07-12
+- [[论文笔记/重排/长期价值/Long-Term Value of Exploration|Long-Term Value of Exploration]] · 2026-07-12
 - [[Agent 学习/金融Agent学习/代码学习/trading agents代码学习|TradingAgents 代码学习]] · 2026-07-07
-- [[Agent 学习/金融Agent学习/行为模式库|行为模式库]] · 2026-07-06
-- [[Agent 学习/金融Agent学习/金融Agent两周学习计划|金融 Agent 两周学习计划]] · 2026-07-06
-- [[Agent 学习/金融Agent学习/代码带读记录|代码带读记录]] · 2026-07-06
 - [[论文笔记/重排/LLM重排/LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation|LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation]] · 2026-06-12
 - [[论文笔记/重排/调研综述/推荐系统重排最新进展|推荐系统重排最新进展]] · 2026-06-10
 - [[论文笔记/重排/生成式重排/YOLOR|YOLOR]] · 2026-06-10

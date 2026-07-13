@@ -6,23 +6,41 @@
       <description>最近的10条笔记 on 阿星的个人博客</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>UnifiedRL</title>
+    <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E7%B2%BE%E6%8E%92/LTR%E4%B8%8E%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%9E%8D%E5%90%88/UnifiedRL</link>
+    <guid>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E7%B2%BE%E6%8E%92/LTR%E4%B8%8E%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%9E%8D%E5%90%88/UnifiedRL</guid>
+    <description><![CDATA[ UnifiedRL 1. ]]></description>
+    <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+  </item><item>
+    <title>Long-Term Value of Exploration</title>
+    <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/%E9%95%BF%E6%9C%9F%E4%BB%B7%E5%80%BC/Long-Term-Value-of-Exploration</link>
+    <guid>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/%E9%95%BF%E6%9C%9F%E4%BB%B7%E5%80%BC/Long-Term-Value-of-Exploration</guid>
+    <description><![CDATA[ Long-Term Value of Exploration 1. ]]></description>
+    <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+  </item><item>
+    <title>Two-Stage Constrained Actor-Critic</title>
+    <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/%E9%95%BF%E6%9C%9F%E4%BB%B7%E5%80%BC/Two-Stage-Constrained-Actor-Critic</link>
+    <guid>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/%E9%95%BF%E6%9C%9F%E4%BB%B7%E5%80%BC/Two-Stage-Constrained-Actor-Critic</guid>
+    <description><![CDATA[ Two-Stage Constrained Actor-Critic 基本信息 标题：Two-Stage Constrained Actor-Critic for Short Video Recommendation 作者：Qingpeng Cai、Zhenghai Xue、Chi Zhang、Wanqi Xue、Shuchang Liu、Ruohan Zhan、Xueliang Wang、Tianyou Zuo、Wentao Xie、Dong Zheng、Peng Jiang、Kun Gai 机构：Kuaishou Technology；Hong Kong University of Sci... ]]></description>
+    <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+  </item><item>
     <title>Agent 学习</title>
     <link>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/</link>
     <guid>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[ Agent 学习 这里收录公开的 Agent 学习计划、代码带读和实践复盘。 TradingAgents 代码学习 · 2026-07-07 行为模式库 · 2026-07-06 金融 Agent 两周学习计划 · 2026-07-06 代码带读记录 · 2026-07-06 . ]]></description>
-    <pubDate>Tue, 07 Jul 2026 10:18:07 GMT</pubDate>
+    <description><![CDATA[ Agent 学习 这里收录公开的 Agent 学习计划、代码带读和实践复盘。 TradingAgents 代码学习 · 2026-07-07 . ]]></description>
+    <pubDate>Tue, 07 Jul 2026 10:18:58 GMT</pubDate>
   </item><item>
     <title>首页</title>
     <link>https://chaolistat.github.io/</link>
     <guid>https://chaolistat.github.io/</guid>
-    <description><![CDATA[ 阿星的个人博客 这里整理可公开的个人思考、论文阅读笔记和 Agent 学习记录。日常写作仍在本地 Obsidian 中完成，只有明确标记 publish: true 的内容会同步到这里。 入口 个人思考 论文笔记 Agent 学习 关于 最近更新 TradingAgents 代码学习 · 2026-07-07 行为模式库 · 2026-07-06 金融 Agent 两周学习计划 · 2026-07-06 代码带读记录 · 2026-07-06 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12... ]]></description>
-    <pubDate>Tue, 07 Jul 2026 07:52:17 GMT</pubDate>
+    <description><![CDATA[ 阿星的个人博客 这里整理可公开的个人思考、论文阅读笔记和 Agent 学习记录。日常写作仍在本地 Obsidian 中完成，只有明确标记 publish: true 的内容会同步到这里。 入口 个人思考 论文笔记 Agent 学习 关于 最近更新 UnifiedRL · 2026-07-12 Two-Stage Constrained Actor-Critic · 2026-07-12 Long-Term Value of Exploration · 2026-07-12 TradingAgents 代码学习 · 2026-07-07 LLM-Enhanced-Reranking-for-Co... ]]></description>
+    <pubDate>Tue, 07 Jul 2026 10:18:58 GMT</pubDate>
   </item><item>
     <title>论文笔记</title>
     <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</link>
     <guid>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</guid>
-    <description><![CDATA[ 论文笔记 这里收录公开的论文阅读笔记、研究整理和方法总结。 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 推荐系统重排最新进展 · 2026-06-10 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM-Diversity-Re-ranking · 2026-06-10 LLM4Rerank · 2026-06-10 InvariRank · 2026-06-10 CONGRATS · 2026-06-10 CMR · 2026-06-10 Ag... ]]></description>
-    <pubDate>Tue, 07 Jul 2026 07:42:51 GMT</pubDate>
+    <description><![CDATA[ 论文笔记 这里收录公开的论文阅读笔记、研究整理和方法总结。 UnifiedRL · 2026-07-12 Two-Stage Constrained Actor-Critic · 2026-07-12 Long-Term Value of Exploration · 2026-07-12 LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation · 2026-06-12 推荐系统重排最新进展 · 2026-06-10 YOLOR · 2026-06-10 MultiTRON · 2026-06-10 LLM-Diversit... ]]></description>
+    <pubDate>Tue, 07 Jul 2026 10:18:58 GMT</pubDate>
   </item><item>
     <title>个人思考</title>
     <link>https://chaolistat.github.io/%E4%B8%AA%E4%BA%BA%E6%80%9D%E8%80%83/</link>
@@ -41,24 +59,6 @@
     <guid>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/trading-agents%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0</guid>
     <description><![CDATA[ TradingAgents 代码学习 核对结论 整体理解基本正确：TradingAgentsGraph 的核心确实是一个基于 LangGraph 的 StateGraph workflow，通过节点、边和条件路由把多个 agent 串成一次完整分析流程。 需要修正的点： LangGraph 拼写不是 langraph。 图的基础概念不止“4 个”：这里至少要区分 StateGraph、state、node、edge、conditional edge。 social 是兼容旧配置的 key，实际 agent 节点名已经是 Sentiment Analyst。 create_msg_delete(... ]]></description>
     <pubDate>Mon, 06 Jul 2026 16:00:00 GMT</pubDate>
-  </item><item>
-    <title>代码带读记录</title>
-    <link>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E4%BB%A3%E7%A0%81%E5%B8%A6%E8%AF%BB%E8%AE%B0%E5%BD%95</link>
-    <guid>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E4%BB%A3%E7%A0%81%E5%B8%A6%E8%AF%BB%E8%AE%B0%E5%BD%95</guid>
-    <description><![CDATA[ 代码带读记录 使用方式 每天开始时直接说： 开始今天的金融 Agent 带读 每天只记录三件事： 今日看了什么： 我真正理解了什么： 这个设计对复盘 Agent 的启发： 2026-07-06 今日看了什么：提前带读 repos/TradingAgents/LEARNING_PLAN_zh.md 的“项目心智模型”和“推荐阅读顺序”，并用 main.py、trading_graph.py、setup.py、dataflows/interface.py、llm_clients/factory.py 做代码锚点。 我真正理解了什么：TradingAgents 把系统拆成 graph、agents、... ]]></description>
-    <pubDate>Sun, 05 Jul 2026 16:00:00 GMT</pubDate>
-  </item><item>
-    <title>行为模式库</title>
-    <link>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E8%A1%8C%E4%B8%BA%E6%A8%A1%E5%BC%8F%E5%BA%93</link>
-    <guid>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E8%A1%8C%E4%B8%BA%E6%A8%A1%E5%BC%8F%E5%BA%93</guid>
-    <description><![CDATA[ 行为模式库 高频问题 模式触发场景典型表现下次约束 有效规则 待验证假设 . ]]></description>
-    <pubDate>Sun, 05 Jul 2026 16:00:00 GMT</pubDate>
-  </item><item>
-    <title>金融 Agent 两周学习计划</title>
-    <link>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E4%B8%A4%E5%91%A8%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92</link>
-    <guid>https://chaolistat.github.io/Agent-%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E5%AD%A6%E4%B9%A0/%E9%87%91%E8%9E%8DAgent%E4%B8%A4%E5%91%A8%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92</guid>
-    <description><![CDATA[ 金融 Agent 两周学习计划 主线 这两周只做一个方向：个人操作复盘 Agent。 它不负责预测行情，也不直接给买卖建议。它的核心价值是读取我每天的操作记录，帮助我复盘： 当时为什么操作。 是否符合原计划。 是否存在情绪、信息缺口、执行偏差和风控缺失。 结果好坏分别来自运气、市场环境还是决策质量。 下次遇到类似场景前，应该检查什么。 Warning 本计划只用于学习工程、Agent 设计和个人复盘，不构成任何投资建议。 参考材料 daily_stock_analysis Agent 学习计划 借鉴点：运行入口、金融数据链路、Agent ReAct 循环、工具注册、结构化报告、数据质量和后验评... ]]></description>
-    <pubDate>Sun, 05 Jul 2026 16:00:00 GMT</pubDate>
   </item><item>
     <title>LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation</title>
     <link>https://chaolistat.github.io/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%87%8D%E6%8E%92/LLM%E9%87%8D%E6%8E%92/LLM-Enhanced-Reranking-for-Complementary-Product-Recommendation</link>
